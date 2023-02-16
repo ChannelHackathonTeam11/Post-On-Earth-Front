@@ -1,34 +1,36 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import './App.css'
+import io from 'socket.io-client'
+import Chat from './Chat';
+
+const socket = io.connect("http://localhost:3000");
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [username, setUsername] = useState("");
+  const [room, setRoom] = useState("");
 
+  const joinRoom = () => {
+    if (username !== "" && room !== "") {
+      socket.emit("join_room" , room);
+    }
+  };
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h3>Join A Chat</h3>
+      <input type="text" placeholder='Name..' onChange={(event) => {
+        setUsername(event.target.value);
+      }}></input>
+
+      <input type="text" placeholder='Room Id..' onChange={(event) => {
+        setRoom(event.target.value);
+      }}></input>
+
+      <button onClick={joinRoom}>Join</button>
+
+      <Chat socket={socket} username={username} room={room}></Chat>
     </div>
   )
 }
 
 export default App
+
