@@ -12,6 +12,7 @@ import { Chat } from "./Pages/Chat";
 import { ChatList } from "./Pages/ChatList";
 import { Profile } from "./Pages/Profile";
 import { Post } from "./Pages/Post";
+import { Write } from "./Pages/Write";
 function App() {
   return (
     <RecoilRoot>
@@ -20,7 +21,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/chatlist" element={<ChatList />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/post" element={<Post />} />
+          <Route path="/post/:uuid" element={<Post />} />
+          <Route path="/write" element={<Write />} />
         </Route>
         <Route element={<WithoutNavBar />}>
           <Route path="/register" element={<Register />} />

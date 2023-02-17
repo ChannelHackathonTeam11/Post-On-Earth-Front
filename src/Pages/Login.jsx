@@ -3,13 +3,31 @@ import { TextField } from "@mui/material";
 import { Avatar } from "@mui/material";
 import { Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
+import userInfoAtom from "../recoil/userInfo";
+import { useRecoilState } from "recoil";
+import axios from "../axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const [idValid, setIdValid] = useState(false);
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
+  const navigate = useNavigate();
+  console.log(userInfo);
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    axios
+      .post("/users/login", {
+        user_id: id,
+        password: password,
+      })
+      .then((res) => {
+        if (res.status) {
+          setUserInfo({ user_id: id, password });
+          navigate("/");
+        }
+      });
+  };
 
   const checkId = () => {};
 
@@ -47,7 +65,7 @@ const Login = () => {
   return (
     <div style={style}>
       <div style={groupStyle}>
-        <div style={textStyle}>원하는 아이디를 선택하세요</div>
+        <div style={textStyle}>아이디를 입력하세요</div>
         <TextField
           size="small"
           style={inputStyle}
@@ -58,7 +76,7 @@ const Login = () => {
         />
       </div>
       <div style={groupStyle}>
-        <div style={textStyle}>원하는 비밀번호를 선택하세요</div>
+        <div style={textStyle}>아이디를 입력하세요</div>
         <TextField
           style={inputStyle}
           size="small"
@@ -75,7 +93,7 @@ const Login = () => {
         onClick={handleSubmit}
         endIcon={<SendIcon />}
         style={{ width: "300px", marginTop: "30px" }}
-        disabled={id === "" || password === "" || !idValid}
+        disabled={id === "" || password === ""}
       >
         로그인
       </Button>

@@ -6,6 +6,7 @@ import Badge from "@mui/material/Badge";
 import ChatIcon from "@mui/icons-material/Chat";
 import CloseFullscreenIcon from "@mui/icons-material/CloseFullscreen";
 import axios from "../../axios";
+import { useNavigate } from "react-router-dom";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -37,26 +38,24 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 const Marker = (props) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  console.log(isExpanded);
-
+  const navigate = useNavigate();
   const markerStyle = {
     display: "flex",
     backgroundColor: "black",
     color: "white",
-    width: isExpanded ? "200px" : "fit-content",
+    width: "fit-content",
     justifyContent: "center",
     alignItems: "center",
     gap: "10px",
-    padding: isExpanded ? "15px" : "5px 5px 5px 0px",
+    padding: "5px 5px 5px 0px",
     borderRadius: "20px",
     fontSize: "15px",
-    whiteSpace: isExpanded ? "normal" : "nowrap",
-    height: isExpanded ? "fit-content" : "25px",
+    whiteSpace: "nowrap",
+    height: "25px",
     overflowWrap: "break-word",
   };
   const triangleStyle = {
-    display: isExpanded ? "none" : "block",
+    display: "block",
     position: "relative",
     width: 0,
     height: 0,
@@ -65,50 +64,16 @@ const Marker = (props) => {
     borderRight: "15px solid black",
     left: "-6px",
   };
-  const defaultStyle = {};
-  const expandedStyle = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: "5px",
-  };
-  const textStyle = {
-    fontSize: "15px",
-    width: "150px",
-  };
 
-  const handleCreateRoom = () => {
-    const to = props.id;
-    const from = "root";
-    axios.post("/create", { to, from }).then((res) => {
-      const roomId = res.data.roomId;
-    });
+  const handleViewPost = () => {
+    navigate(`/post/${props.uuid}`);
   };
 
   return (
     <div style={markerStyle}>
       <div style={triangleStyle}></div>
-      {isExpanded ? (
-        <div style={expandedStyle}>
-          <Button
-            size="small"
-            startIcon={<CloseFullscreenIcon />}
-            variant="text"
-            onClick={() => setIsExpanded(!isExpanded)}
-          />
-          <div>{props.title}</div>
-          <div style={textStyle}>{props.text}</div>
-          <Button
-            startIcon={<ChatIcon />}
-            variant="contained"
-            onClick={handleCreateRoom}
-          >
-            채팅하기
-          </Button>
-        </div>
-      ) : (
-        <div onClick={() => setIsExpanded(!isExpanded)}>{props.title}</div>
-      )}
+
+      <div onClick={handleViewPost}>{props.title}</div>
 
       <StyledBadge
         overlap="circular"

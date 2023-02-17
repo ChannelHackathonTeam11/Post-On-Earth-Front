@@ -3,15 +3,32 @@ import { TextField } from "@mui/material";
 import { Avatar } from "@mui/material";
 import { Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
+import { useNavigate } from "react-router-dom";
+import axios from "../axios";
 
 const Register = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [idValid, setIdValid] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    axios
+      .post("/users/register", {
+        user_id: id,
+        password: password,
+        user_image: "0",
+      })
+      .then((res) => {
+        if (res.status) {
+          navigate("/login");
+        }
+      });
+  };
 
-  const checkId = () => {};
+  const checkId = () => {
+    setIdValid(true);
+  };
 
   const style = {
     display: "flex",

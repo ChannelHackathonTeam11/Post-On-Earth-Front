@@ -10,6 +10,7 @@ import SendIcon from "@mui/icons-material/Send";
 import styled from "styled-components";
 import { IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useNavigate } from "react-router-dom";
 
 const MyMessage = ({ messageContent, user_id }) => {
   const myMessageStyle = {
@@ -88,6 +89,7 @@ function Chat() {
   const { user_id } = useRecoilValue(userInfoAtom);
   const [otherId, setOtherId] = useState("");
   const [otherProfileURL, setOtherProfileURL] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const _socket = io.connect(
@@ -102,6 +104,8 @@ function Chat() {
       socket.emit("join_room", { room_id: parseInt(room_id) });
       socket.on("join_room", (data) => {
         setMessageList(data.message ? data.message : []);
+        console.log(data);
+        setOtherId(data.to);
       });
       socket.on("receive_message", (data) => {
         console.log(data);
@@ -123,7 +127,9 @@ function Chat() {
     }
   };
 
-  const handleBack = () => {};
+  const handleBack = () => {
+    navigate("/chatlist");
+  };
 
   const windowStyle = {
     width: "100%",
@@ -146,6 +152,7 @@ function Chat() {
     boxSizing: "border-box",
     borderRadius: "20px",
     gap: "20px",
+    paddingRight: "40px",
   };
 
   const footerStyle = {
@@ -173,10 +180,21 @@ function Chat() {
   return (
     <div style={windowStyle} className="chat-window">
       <div style={headerStyle} className="chat-header">
-        <IconButtonWrapper onClick={handleBack}>
+        <IconButtonWrapper
+          onClick={handleBack}
+          style={{
+            marginRight: "auto",
+          }}
+        >
           <ArrowBackIcon />
         </IconButtonWrapper>
-        <div>{otherId}</div>
+        <div
+          style={{
+            marginRight: "auto",
+          }}
+        >
+          {otherId}
+        </div>
       </div>
       <div style={bodyStyle}>
         <ScrollToBottom className="message-container">
