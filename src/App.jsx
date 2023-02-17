@@ -8,6 +8,8 @@ import { WithNavBar } from "./Pages/WithNavBar";
 import { WithoutNavBar } from "./Pages/WithoutNavBar";
 import { NavBar } from "./Components/Common/NavBar";
 import { RecoilRoot } from "recoil";
+import Lobby from "./Lobby/Lobby.jsx";
+
 function App() {
   return (
     <RecoilRoot>
@@ -18,6 +20,7 @@ function App() {
         <Route element={<WithoutNavBar />}>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/test" element={<Lobby />} />
         </Route>
       </Routes>
     </RecoilRoot>

@@ -18,6 +18,8 @@
     "google-map-react": "^2.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-scroll-to-bottom": "^4.2.0",
+    "socket.io-client": "^4.6.0",
     "react-router-dom": "^6.8.1",
     "recoil": "^0.7.6",
     "socket.io": "^4.6.0",
