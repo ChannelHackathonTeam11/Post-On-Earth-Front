@@ -8,9 +8,12 @@ import AddIcon from "@mui/icons-material/Add";
 import axios from "../axios";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
+import styled from "styled-components";
 import userInfoAtom from "../recoil/userInfo";
+
 const Home = () => {
   const [center, setCenter] = useState({});
+  const [zoom, setZoom] = useState(17);
   const [currentLocation, setCurrentLocation] =
     useRecoilState(currentLocationAtom);
   const [markerList, setMarkerList] = useState([]);
@@ -35,19 +38,21 @@ const Home = () => {
   const resetCenter = async () => {
     if (currentLocation.lat) {
       setCenter(currentLocation);
+      setZoom(17);
+
       return;
     }
-    console.log("resetCenter");
     const location = await getLocation();
     const lat = location.coords.latitude;
     const lng = location.coords.longitude;
     setCenter({ lat, lng });
     setCurrentLocation({ lat, lng });
+    setZoom(17);
   };
 
   const onChange = ({ center, zoom }) => {
-    console.log(center, zoom);
     setCenter(center);
+    setZoom(zoom);
   };
 
   const handleAdd = () => {
@@ -103,7 +108,7 @@ const Home = () => {
         <Map
           onChange={onChange}
           center={center}
-          zoom={17}
+          zoom={zoom}
           markerList={markerList}
         ></Map>
 

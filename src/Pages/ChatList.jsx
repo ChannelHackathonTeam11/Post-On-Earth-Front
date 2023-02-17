@@ -16,12 +16,9 @@ const ChatList = () => {
     axios
       .post("/chat/list", { user_id: userInfo.user_id })
       .then((res) => {
-        console.log(res);
         setChatRoomList(res.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, []);
 
   const chatRoomStyle = {

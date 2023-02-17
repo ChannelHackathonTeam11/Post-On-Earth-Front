@@ -24,7 +24,6 @@ const Post = () => {
   const [liked, setLiked] = useState(false);
   const userInfo = useRecoilValue(userInfoAtom);
   const navigate = useNavigate();
-  console.log(center);
 
   useEffect(() => {
     axios
@@ -33,7 +32,6 @@ const Post = () => {
       })
       .then((res) => {
         res = res.data;
-        console.log(res);
         setTitle(res.data.title);
         setText(res.data.text);
         setUser_id(res.data.user_id);
@@ -41,16 +39,13 @@ const Post = () => {
         setProfileURL(res.data.profileURL);
         setLike(res.data.like);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, []);
 
   const handleCreateRoom = () => {
     axios
       .post("/chat/create", { to: user_id, from: userInfo.user_id })
       .then((res) => {
-        console.log("res", res);
         setRoom_id(res.data.room_id);
       });
   };

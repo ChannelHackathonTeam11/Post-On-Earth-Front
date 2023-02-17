@@ -99,16 +99,13 @@ function Chat() {
   }, []);
 
   useEffect(() => {
-    console.log(socket);
     if (socket) {
       socket.emit("join_room", { room_id: parseInt(room_id) });
       socket.on("join_room", (data) => {
         setMessageList(data.message ? data.message : []);
-        console.log(data);
         setOtherId(data.to);
       });
       socket.on("receive_message", (data) => {
-        console.log(data);
         setMessageList((list) => [...list, data]);
       });
     }

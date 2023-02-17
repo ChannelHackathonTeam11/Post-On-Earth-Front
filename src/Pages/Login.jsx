@@ -13,7 +13,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const navigate = useNavigate();
-  console.log(userInfo);
 
   const handleSubmit = () => {
     axios

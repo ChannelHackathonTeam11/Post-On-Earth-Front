@@ -11,12 +11,13 @@ import { useRecoilState } from "recoil";
 import GoogleMapReact from "google-map-react";
 import { Me } from "../Components/Home/Me";
 import axios from "../axios";
+import { useNavigate } from "react-router-dom";
 
 const Write = () => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const userInfo = useRecoilValue(userInfoAtom);
-  console.log(userInfo);
+  const navigate = useNavigate();
   const [currentLocation, setCurrentLocation] =
     useRecoilState(currentLocationAtom);
 
@@ -35,11 +36,9 @@ const Write = () => {
         lng: currentLocation.lng,
       })
       .then((res) => {
-        console.log(res);
+        navigate("/");
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   return (
