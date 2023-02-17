@@ -17,7 +17,7 @@ const Home = () => {
     resetCenter();
     const getMarkerList = async () => {
       const response = await axios.get("/contents");
-      setMarkerList(response.data);
+      setMarkerList(response.data.data);
     };
     getMarkerList();
   }, []);

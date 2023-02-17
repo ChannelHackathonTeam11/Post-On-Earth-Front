@@ -18,14 +18,7 @@ const Map = (props) => {
       >
         <Me lat={currentLocation.lat} lng={currentLocation.lng} />
         {props.markerList.map((marker) => {
-          return (
-            <Marker
-              lat={marker.lat}
-              lng={marker.lng}
-              title={marker.title}
-              key={marker.id}
-            />
-          );
+          return <Marker {...marker} />;
         })}
       </GoogleMapReact>
     </div>
