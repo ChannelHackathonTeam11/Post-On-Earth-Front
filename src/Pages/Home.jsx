@@ -33,6 +33,10 @@ const Home = () => {
   };
 
   const resetCenter = async () => {
+    if (currentLocation.lat) {
+      setCenter(currentLocation);
+      return;
+    }
     console.log("resetCenter");
     const location = await getLocation();
     const lat = location.coords.latitude;
