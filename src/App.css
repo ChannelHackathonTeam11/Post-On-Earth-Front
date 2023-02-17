@@ -1,6 +1,9 @@
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+
 #root {
   max-width: 1280px;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
 }
 
 body {
@@ -11,4 +14,8 @@ body {
 
 .gmnoprint {
   display: none;
+}
+
+* {
+  font-family: "Spoqa Han Sans Neo", "sans-serif";
 }

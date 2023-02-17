@@ -2,12 +2,24 @@ import React, { useState, useEffect } from "react";
 import { Map } from "../Components/Home/Map";
 import { Button } from "@mui/material";
 import AdjustIcon from "@mui/icons-material/Adjust";
+import currentLocationAtom from "../recoil/currentLocation";
+import { useRecoilState } from "recoil";
+import axios from "../axios";
 
 const Home = () => {
   const [center, setCenter] = useState({});
+  const [currentLocation, setCurrentLocation] =
+    useRecoilState(currentLocationAtom);
+  const [markerList, setMarkerList] = useState([]);
+  console.log(markerList);
 
   useEffect(() => {
     resetCenter();
+    const getMarkerList = async () => {
+      const response = await axios.get("/contents");
+      setMarkerList(response.data);
+    };
+    getMarkerList();
   }, []);
 
   const getLocation = () => {
@@ -22,6 +34,7 @@ const Home = () => {
     const lat = location.coords.latitude;
     const lng = location.coords.longitude;
     setCenter({ lat, lng });
+    setCurrentLocation({ lat, lng });
   };
 
   const onChange = ({ center, zoom }) => {
@@ -46,7 +59,12 @@ const Home = () => {
   return (
     <div>
       <div style={mapStyle}>
-        <Map onChange={onChange} center={center} zoom={15}></Map>
+        <Map
+          onChange={onChange}
+          center={center}
+          zoom={17}
+          markerList={markerList}
+        ></Map>
 
         <Button
           style={adjustStyle}
@@ -59,12 +77,6 @@ const Home = () => {
           <AdjustIcon />
         </Button>
       </div>
-      <Button variant="contained" color="primary" disableElevation>
-        로그인 할래요
-      </Button>
-      <Button variant="outlined" color="primary">
-        회원가입 할래요
-      </Button>
     </div>
   );
 };
