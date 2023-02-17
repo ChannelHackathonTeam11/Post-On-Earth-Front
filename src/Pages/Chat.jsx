@@ -103,7 +103,8 @@ function Chat() {
       socket.on("join_room", (data) => {
         setMessageList(data.message ? data.message : []);
       });
-      socket.on("recieve_message", (data) => {
+      socket.on("receive_message", (data) => {
+        console.log(data);
         setMessageList((list) => [...list, data]);
       });
     }
